@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography.X509Certificates;
 
 namespace SkalProj_Datastrukturer_Minne
 {
@@ -10,9 +11,93 @@ namespace SkalProj_Datastrukturer_Minne
         /// <param name="args"></param>
         static void Main()
         {
+            /*
+                1. Hur fungerar stacken och heapen? Förklara gärna med exempel eller skiss på dess grundläggande funktion?
+                
+                Stacken är ett är ett område där 'Value-typer' så som bool, char, integer etc. lagras. Heapen däremot lagrar 
+                'Referens-typer' som te.x. strings, objekt och klasser. Se exempel nedanför.
+                
+                public void StackExample() 
+                {        
+                    // Lagras i stack
+                    int a = 0; 
+                    int b = 1;                                   
+                }
+
+                public void HeapExample() 
+                {
+                    // Lagras på heapen.
+                    object obj = new(); 
+                    string str = "text";
+                }
+
+                En annan skillnad mellan Stack och Heap är att stacken per automatik rensar bort allt den lagrar efter användning. 
+                I StackExample() betyder det att både int a och b enbart lagras i stacken så länge metoden är igång, därefter frigörs
+                dem från stacken.
+
+                Heapen har istället något som kallas Garbage collection (GC) vilket också rensar bort det som lagras men det sker inte omedelbart 
+                som det gör för stack:en. Referens-typer finns därav kvar tills GC rensar bort dem.
+
+                
+                
+                public class MyClass 
+                {
+                    
+                    public int a = 0;
+
+                    public void ValueTypeInReferenceType() 
+                    {
+                        int b = 1;
+                    }              
+                }
+                
+                Om jag däremot deklarar integer 'a' som public i en klass så kommer den att lagras i heapen då alla fält inom en klass räknas som en referenstyp. 
+                Integer 'b' lagras däremot fortfarande i stack:en då den fortfarande är en lokal variabel i detta fall. På ett sätt går det att säga att alla 
+                value-typer som deklareras i en klass eller objekt lagras på heapen eftersom att de instansieras när vi deklarerar dem där.
+                
+            
+                2. Vad är Value Types respektive Reference Types och vad skiljer dem åt?
+
+                Value Types är typer från System.ValueType. Exempel på dessa är...
+
+                - bool
+                - char
+                - int
+                - byte
+                - double
+                - enum
+                - float
+                
+                Reference Types är typer som ärver från System.Object (eller är System.Object.object). Exempel på dessa är...
+                
+                - class
+                - interface
+                - object
+                - delegate
+                - string
+
+                Den största skillnaden mellan value och reference types är att value-types lagrar själva värdet medans reference-types lagrar
+                en referens till värdet.
+
+                3. 
+
+              
+              
+             
+            */
+
+
+
+
+
 
             while (true)
             {
+
+                
+
+                
+
                 Console.WriteLine("Please navigate through the menu by inputting the number \n(1, 2, 3 ,4, 0) of your choice"
                     + "\n1. Examine a List"
                     + "\n2. Examine a Queue"
@@ -115,5 +200,7 @@ namespace SkalProj_Datastrukturer_Minne
         }
 
     }
+
+    
 }
 
