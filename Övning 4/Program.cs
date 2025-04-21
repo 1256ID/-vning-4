@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Security.Cryptography.X509Certificates;
+
 
 namespace SkalProj_Datastrukturer_Minne
 {
@@ -170,14 +170,19 @@ namespace SkalProj_Datastrukturer_Minne
             string tryAgain = "\nFörsök igen genom att klicka på valfri tangent.";
             string? input = "";
 
-            // Har lagt till denna kod för att se listans Count/Capacity värden innan vi börjar lägga till värden i listan.
-            Console.WriteLine("List count: " + theList.Count);
-            Console.WriteLine("List capacity: " + theList.Capacity);
-            Console.WriteLine("\nKlicka på valfri tangent för att fortsätta.");
-            Console.ReadKey();
+            /* 
+                Har lagt till denna kod för att se listans Count/Capacity värden innan vi börjar lägga till värden i listan.
+                Console.WriteLine("List count: " + theList.Count);
+                Console.WriteLine("List capacity: " + theList.Capacity);
+                Console.WriteLine("\nKlicka på valfri tangent för att fortsätta.");
+                Console.ReadKey();
+            */
 
+            // Använder en do-while loop för att denna metod ska vara igång tills användaren själv avslutar den.
+            // Har valt kontrollera ifall inmatningen är lika med 'exit' för att avgöra om loop:en ska fortsätta gå.
             do
             {
+                // Använder en try-catch för felhantering av användar-inmatning samt en if-statement som kollar ifall inmatningen är lika med null eller om strängen är tom.
                 try
                 {
                     Console.Clear();
@@ -225,6 +230,11 @@ namespace SkalProj_Datastrukturer_Minne
                                 När antalet element är fördefinerat/bestämt.                               
                             
                     */
+
+
+                    // Använder switch för kontrollera användarens inmatning
+                    // Ifall användaren har lagt till +/- så kommer de två första alternativen att genomföras, annars blir det default.
+                    // Enkel theList.Add() och Remove() som används för att lägga till eller ta bort inmatning från listan.
 
                     switch (nav)
                     {
@@ -275,6 +285,109 @@ namespace SkalProj_Datastrukturer_Minne
              * Create a switch with cases to enqueue items or dequeue items
              * Make sure to look at the queue after Enqueueing and Dequeueing to see how it behaves
             */
+
+            /*
+                Övning 2.
+            
+                1.  Simulera följande kö på papper:
+                    a.  ICA öppnar och kön till kassan är tom
+                    b.  Kalle ställer sig i kön
+                    c.  Greta ställer sig i kön
+                    d.  Kalle blir expedierad och lämnar kön
+                    e.  Stina ställer sig i kön
+                    f.  Greta blir expedierad och lämnar kön
+                    g.  Olle ställer sig i kön
+                    h.  Stina blir expedierad och lämnar kön 
+
+            2. 
+             
+            */
+
+
+            /*  
+                Liknande struktur till övning 1 med skillnad att Queue<string> används här samt theQueue.Enqueue() och Dequeue().
+
+                Har valt att använda en List<string> vid sidan om Queue<string> då det är enklare att simulera den exakta ICA-kön som finns med i uppgiften.
+
+                Genom att mata in följande så kan ICA-kön simuleras...
+                - +Kalle
+                - +Greta
+                - -Kalle
+                - +Stina
+                - -Greta
+                - +Olle
+                - -Stina
+            */
+
+            Queue<string> theQueue = [];
+            List<string> theList = [];
+            string tryAgain = "\nFörsök igen genom att klicka på valfri tangent.";
+            string? input = "";
+                      
+            do
+            {
+                try
+                {
+                    Console.Clear();                    
+                    Console.WriteLine
+                        (
+                            "Lägg till eller ta bort ett element i kön genom att skriva "
+                            + "+ eller - framför ordet. T.ex. +Bengt eller -Bengt." +
+                            "\nSkriv 'exit' för att gå tillbaka till huvudmenyn.\n"                         
+                        );
+
+                    Console.WriteLine("ICA öppnar och kön till kassan är tom");
+                    foreach (string str in theList)
+                    {
+                        Console.WriteLine(str);
+                    }
+
+                    Console.Write("\nAnge (+/-)ord: ");
+                    input = Console.ReadLine();
+                    if (input == null || input == "")
+                    {
+                        Console.WriteLine("Var vänlig och använd tecken." + tryAgain);
+                        Console.ReadKey();
+                        continue;
+                    }
+                    
+                    Console.Clear();
+                    char nav = input[0];
+                    string value = input[1..];
+                    Console.Clear();
+
+
+                    switch (nav)
+                    {
+
+                        case '+':
+                            theQueue.Enqueue(input);
+                            theList.Add(input + " ställer sig i kön");                      
+                            break;
+
+                        case '-':
+                            theList.Add(theQueue.Dequeue() + " blir expedierad och lämnar kön"); 
+                            break;
+                      
+                        
+                        default:
+                            Console.WriteLine
+                                (
+                                    "Var vänlig och använd + eller - framför det ord " +
+                                    "du vill lägga till/ta bort." + tryAgain
+                                );
+                            Console.ReadKey();
+                            break;
+                    }
+                }
+
+                catch
+                {
+                    Console.WriteLine("Ogiltig inmatning." + tryAgain);
+                    Console.ReadKey();
+                }
+
+            } while (input != "exit");
         }
 
         /// <summary>
