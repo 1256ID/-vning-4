@@ -166,12 +166,103 @@ namespace SkalProj_Datastrukturer_Minne
              * Below you can see some inspirational code to begin working.
             */
 
-            //List<string> theList = new List<string>();
-            //string input = Console.ReadLine();
-            //char nav = input[0];
-            //string value = input.substring(1);
+            List<string> theList = [];
+            string tryAgain = "\nFörsök igen genom att klicka på valfri tangent.";
+            string? input = "";
 
-            //switch(nav){...}
+            // Har lagt till denna kod för att se listans Count/Capacity värden innan vi börjar lägga till värden i listan.
+            Console.WriteLine("List count: " + theList.Count);
+            Console.WriteLine("List capacity: " + theList.Capacity);
+            Console.WriteLine("\nKlicka på valfri tangent för att fortsätta.");
+            Console.ReadKey();
+
+            do
+            {
+                try
+                {
+                    Console.Clear();
+                    Console.WriteLine
+                        (
+                            "Lägg till eller ta bort ett ord i listan genom att skriva "
+                            + "+ eller - framför ordet. T.ex. +Bil eller -Bil." +
+                            "\nSkriv 'exit' för att gå tillbaka till huvudmenyn.\n"
+                        );
+                    Console.Write("Ange (+/-)ord: ");
+                    input = Console.ReadLine();
+                    if (input == null || input == "")
+                    {
+                        Console.WriteLine("Var vänlig och använd tecken." + tryAgain);
+                        Console.ReadKey();
+                        continue;
+                    }
+                    char nav = input[0];
+                    string value = input[1..];
+                    Console.Clear();
+
+                    /*
+                        Övning 1.
+
+                        2.  När ökar listans kapacitet?
+
+                                Listan kapacitet ökar när vi lägger till det första värdet och därefter när vi lagt till 4 värden till.              
+
+                        3.  Med hur mycket ökar kapaciteten?
+
+                                Bortsett från första gången listans kapacitet ökar (till 4) så dubbleras kapaciteten varje gång.
+                        
+                        4.  Varför ökar inte listans kapacitet i samma takt som element läggs till?
+
+                                Varje gång kapaciteten ökar så skapas en ny intern array och ifall en ny array skulle behöva skapas 
+                                varje gång ett element läggs till så skulle det innebära en onödig stor mängd minnesallokering. Så 
+                                anledningen till varför den inte gör det är av prestandaskäl. 
+
+                        5.  Minskar kapaciteten när element tas bort ur listan?
+                        
+                                Nej, ifall kapaciteten har ökat en gång så behåller listan sin kapacitet.
+
+                        6.  När är det då fördelaktigt att använda en egendefinierad array istället för en lista?
+                                
+                                När antalet element är fördefinerat/bestämt.                               
+                            
+                    */
+
+                    switch (nav)
+                    {
+                        
+                        case '+':
+                            theList.Add(value);
+                            Console.WriteLine("List count: " + theList.Count);
+                            Console.WriteLine("List capacity: " + theList.Capacity);
+                            Console.WriteLine("\nKlicka på valfri tangent för att fortsätta.");
+                            Console.ReadKey();
+                            break;
+
+                        case '-':
+                            theList.Remove(value);
+                            Console.WriteLine("List count: " + theList.Count);
+                            Console.WriteLine("List capacity: " + theList.Capacity);
+                            Console.WriteLine("\nKlicka på valfri tangent för att fortsätta.");
+                            Console.ReadKey();
+                            break;
+
+                        default:
+                            Console.WriteLine
+                                (
+                                    "Var vänlig och använd + eller - framför det ord " +
+                                    "du vill lägga till/ta bort." + tryAgain
+                                );
+                            Console.ReadKey();
+                        break;
+                    }                                                                                                          
+                }
+
+                catch
+                {
+                    Console.WriteLine("Ogiltig inmatning." + tryAgain);
+                    Console.ReadKey();
+                }
+                
+            } while (input != "exit");
         }
 
         /// <summary>
