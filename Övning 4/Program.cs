@@ -5,12 +5,15 @@ namespace SkalProj_Datastrukturer_Minne
 {
     class Program
     {
+                  
         /// <summary>
         /// The main method, vill handle the menues for the program
         /// </summary>
         /// <param name="args"></param>
         static void Main()
         {
+
+
             /*
                 1. Hur fungerar stacken och heapen? Förklara gärna med exempel eller skiss på dess grundläggande funktion?
                 
@@ -38,8 +41,7 @@ namespace SkalProj_Datastrukturer_Minne
                 Heapen har istället något som kallas Garbage collection (GC) vilket också rensar bort det som lagras men det sker inte omedelbart 
                 som det gör för stack:en. Referens-typer finns därav kvar tills GC rensar bort dem.
 
-                
-                
+                             
                 public class MyClass 
                 {
                     
@@ -80,24 +82,31 @@ namespace SkalProj_Datastrukturer_Minne
                 en referens till värdet.
 
                 3. 
+                
+                public int ReturnValue2()
+                {
+                    MyInt x = new MyInt();
+                    x.MyValue = 3;
+                    MyInt y = new MyInt();
+                    y = x;
+                    y.MyValue = 4;
+                    return x.MyValue;
+                }
 
+                ReturnValue2 returnerar '4' istället för '3' eftersom att x och y är två stycken referenstyper och innehåller därför inte värden 
+                utan referenser till dem. När y tilldelas x så tilldelas inte värdet utan vad som sker är att y tilldelas en referens till x objektet.
+                Det i sin tur leder till x och y nu istället pekar mot samma objekt (x), när y.MyValue tilldelas 4 så tilldelas x.MyValue eftersom 
+                att y nu pekar mot x objektet istället. 
+
+             
+                
               
               
              
             */
 
-
-
-
-
-
             while (true)
-            {
-
-                
-
-                
-
+            {                        
                 Console.WriteLine("Please navigate through the menu by inputting the number \n(1, 2, 3 ,4, 0) of your choice"
                     + "\n1. Examine a List"
                     + "\n2. Examine a Queue"
