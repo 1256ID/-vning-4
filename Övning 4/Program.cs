@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.Design;
 
 
 namespace SkalProj_Datastrukturer_Minne
@@ -273,6 +274,8 @@ namespace SkalProj_Datastrukturer_Minne
                 }
                 
             } while (input != "exit");
+
+            Console.Clear();
         }
 
         /// <summary>
@@ -284,39 +287,37 @@ namespace SkalProj_Datastrukturer_Minne
              * Loop this method untill the user inputs something to exit to main menue.
              * Create a switch with cases to enqueue items or dequeue items
              * Make sure to look at the queue after Enqueueing and Dequeueing to see how it behaves
-            */
+            
 
-            /*
+            
                 Övning 2.
             
-                1.  Simulera följande kö på papper:
-                    a.  ICA öppnar och kön till kassan är tom
-                    b.  Kalle ställer sig i kön
-                    c.  Greta ställer sig i kön
-                    d.  Kalle blir expedierad och lämnar kön
-                    e.  Stina ställer sig i kön
-                    f.  Greta blir expedierad och lämnar kön
-                    g.  Olle ställer sig i kön
-                    h.  Stina blir expedierad och lämnar kön 
+                    1.  Simulera följande kö på papper:
+                        a.  ICA öppnar och kön till kassan är tom
+                        b.  Kalle ställer sig i kön
+                        c.  Greta ställer sig i kön
+                        d.  Kalle blir expedierad och lämnar kön
+                        e.  Stina ställer sig i kön
+                        f.  Greta blir expedierad och lämnar kön
+                        g.  Olle ställer sig i kön
+                        h.  Stina blir expedierad och lämnar kön 
 
-            2. 
-             
-            */
+                                         
+                    2.
+                         Liknande struktur till övning 1 med skillnad att Queue<string> används här samt theQueue.Enqueue() och Dequeue().
 
+                        Har valt att använda en List<string> vid sidan om Queue<string> då det är enklare att simulera den exakta ICA-kön som finns med i uppgiften.
 
-            /*  
-                Liknande struktur till övning 1 med skillnad att Queue<string> används här samt theQueue.Enqueue() och Dequeue().
+                        Genom att mata in följande så kan ICA-kön simuleras...
 
-                Har valt att använda en List<string> vid sidan om Queue<string> då det är enklare att simulera den exakta ICA-kön som finns med i uppgiften.
+                        - +Kalle
+                        - +Greta
+                        - -Kalle
+                        - +Stina
+                        - -Greta
+                        - +Olle
+                        - -Stina
 
-                Genom att mata in följande så kan ICA-kön simuleras...
-                - +Kalle
-                - +Greta
-                - -Kalle
-                - +Stina
-                - -Greta
-                - +Olle
-                - -Stina
             */
 
             Queue<string> theQueue = [];
@@ -388,6 +389,8 @@ namespace SkalProj_Datastrukturer_Minne
                 }
 
             } while (input != "exit");
+
+            Console.Clear();
         }
 
         /// <summary>
@@ -399,7 +402,118 @@ namespace SkalProj_Datastrukturer_Minne
              * Loop this method until the user inputs something to exit to main menue.
              * Create a switch with cases to push or pop items
              * Make sure to look at the stack after pushing and and poping to see how it behaves
+              
+              1.    Att använda en stack skulle bli väldigt mycket extra arbete istället för Queue då
+                    en Queue tar allt i ordning medans ifall vi skulle använda en Stack i en ICA-Kö så skulle vi
+                    behöva skriva ut kön baklänges vilket inte alls skulle fungera i ett verkligt sammanhang.
+              
+                Återanvänder samma kod/struktur som i de andra metoderna.
             */
+
+            Stack<string> theStack = [];
+            List<string> theList = [];
+            string tryAgain = "\nFörsök igen genom att klicka på valfri tangent.";
+            string? input = "";
+
+            do
+            {
+                try
+                {
+                    Console.Clear();
+                    Console.WriteLine
+                        (
+                            "Lägg till eller ta bort ett element i stack:en genom att skriva "
+                            + "+ eller - framför ordet. T.ex. +Bengt eller -Bengt." +
+                            "\nSkriv 'exit' för att gå tillbaka till huvudmenyn.\n" +
+                            "Använd * framför ett ord för att skriva ut det baklänges med" +
+                            "hjälp av stack."
+                        );
+
+                    Console.WriteLine("ICA öppnar och kön till kassan är tom");
+                    foreach (string str in theList)
+                    {
+                        Console.WriteLine(str);
+                    }
+
+                    Console.Write("\nAnge (+/-)ord: ");
+                    input = Console.ReadLine();
+                    if (input == null || input == "")
+                    {
+                        Console.WriteLine("Var vänlig och använd tecken." + tryAgain);
+                        Console.ReadKey();
+                        continue;
+                    }
+
+                    Console.Clear();
+                    char nav = input[0];
+                    string value = input[1..];
+                    Console.Clear();
+
+
+                    switch (nav)
+                    {
+
+                        case '+':
+                            theStack.Push(input);
+                            theList.Add(input + " ställer sig i kön");
+                        break;
+
+                        case '-':
+                            theList.Add(theStack.Pop() + " blir expedierad och lämnar kön");
+                        break;
+
+                        case '*':
+                            string reversedText = ReverseText(input);
+                            Console.WriteLine(reversedText);
+                            Console.WriteLine("\nKlicka på valfri tangent för att fortsätta.");
+                            Console.ReadKey();
+                        break;
+
+                        default:
+                            Console.WriteLine
+                                (
+                                    "Var vänlig och använd + eller - framför det ord " +
+                                    "du vill lägga till/ta bort." + tryAgain
+                                );
+                            Console.ReadKey();
+                            break;
+                    }
+                }
+
+                catch
+                {
+                    Console.WriteLine("Ogiltig inmatning." + tryAgain);
+                    Console.ReadKey();
+                }
+
+            } while (input != "exit");
+
+            Console.Clear();
+        }
+
+        public static string ReverseText(string input)
+        {
+            // Tar bort * från inmatningen.
+            input = input[1..];
+
+            // Använder en Stack<char> för att uttnyttja stack:en i detta fall.
+
+            Stack<char> stack = new Stack<char>();
+
+            for (int i = 0; i < input.Length; i++)
+                stack.Push(input[i]);
+                        
+            string reversedText = "";
+
+            //  Matar på strängen med Pop() vilket då returnerar sista char:en i stacken
+            //  vilket resulterar i 'Reversed' sträng.
+                
+            while (stack.Count > 0)
+            {
+                reversedText += stack.Pop(); 
+            }
+
+            return reversedText; 
         }
 
         static void CheckParanthesis()
@@ -408,7 +522,98 @@ namespace SkalProj_Datastrukturer_Minne
              * Use this method to check if the paranthesis in a string is Correct or incorrect.
              * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
              * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
+             
+             1. 
+                Stack<char> fungerar bättre när vi har hittat en 'match' och ska ta bort paranteserna.            
              */
+
+            Stack<char> theStack = [];
+            string tryAgain = "\nFörsök igen genom att klicka på valfri tangent.";
+            string? input = "";
+
+            do
+            {
+                try
+                {
+                    Console.Clear();
+                    Console.WriteLine("Skriv in 'exit' för att återvända till huvudmenyn.");
+                    Console.Write("Var vänlig och fyll i en sträng: ");
+                    input = Console.ReadLine();
+                    if (input == null || input == "")
+                    {
+                        Console.WriteLine("Var vänlig och använd tecken." + tryAgain);
+                        Console.ReadKey();
+                        continue;
+                    }
+                               
+                    bool correctFormat = true;
+
+                    // For-loop som används för att gå igenom alla tecken i inmatningssträngen.
+
+                    for (int i = 0; i < input.Length; i++)
+                    {
+
+                        // Kontrollerar först ifall det nuvarande tecknet är lika med (, [, { och lägger till det i stacken.
+
+                        if (input[i] == '(' || input[i] == '[' || input[i] == '{')
+                            theStack.Push(input[i]);
+
+                        // Om en motsvarande parantes upptäcks så kollas det först att stack:en inte är tom.
+
+                        else if (input[i] == ')' || input[i] == ']' || input[i] == '}')
+                        {
+                            if (theStack.Count == 0)
+                            {
+                                correctFormat = false;
+                                break;
+                            }
+
+                            // Ifall stacken inte är tom så kontrolleras den nuvarande parantesen mot matchande parantes i stack:en.
+                            // och om den matchar så tas matchande parantes bort från stacken då paranteserna 'matchar'. 
+
+                            if
+                            (
+                                input[i] == ')' && theStack.Peek() == '(' ||
+                                input[i] == ']' && theStack.Peek() == '[' ||
+                                input[i] == '}' && theStack.Peek() == '{'
+                            )
+                            {
+                                theStack.Pop();
+                            }
+                          
+
+                            else
+                            {
+                                correctFormat = false;
+                                break;
+                            }
+                        }                       
+                    }
+
+                    if (theStack.Count > 0)
+                        correctFormat = false;
+
+                    if (!correctFormat)
+                        Console.WriteLine("Strängen har inkorrekt format.");
+
+                    else
+                        Console.WriteLine("Strängen har korrekt format.");
+
+                    Console.WriteLine("\nTryck på valfri tangent för att fortsätta.");
+                    Console.ReadKey();
+
+
+                }
+
+                catch
+                {
+                    Console.WriteLine("Ogiltig inmatning." + tryAgain);
+                    Console.ReadKey();
+                }
+
+            } while (input != "exit");
+
+            Console.Clear();
 
         }
 
